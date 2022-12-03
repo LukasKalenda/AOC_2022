@@ -2497,34 +2497,81 @@ B X
 B Y
 A X
 C Y
-B Z
-1`;
+B Z`;
 
 const data = input.split("\n");
-console.log(data)
 
-
+console.log(data[111].charAt(2))
 let totalScore = 0;
-let firstDrop;
-let secondDrop;
+let sum = 0;
+let value;
+let hodnota;
+
+let draw = 3;
+let win = 6;
 
 let rock = 1;
 let paper = 2;
 let scissors = 3;
 
-let lose = 0;
-let draw = 3;
-let win = 6;
-
+let numberOfLoose = 0;
 
 for (let i = 0; i < data.length; i++) {
-    firstDrop = data[i].charAt(0);
-    secondDrop = data[i].charAt(2)
+    //PART1
+    if (data[i].charAt(2) == "X") {
+        hodnota = "A"
+        value = 1;
 
-    if (firstDrop == secondDrop) {
-        totalScore++;
+    } else if(data[i].charAt(2) == "Y") {
+        hodnota = "B";
+        value = 2;
+
+    } else if(data[i].charAt(2) == "Z"){
+        hodnota = "C";
+        value = 3;
+    } else {
+        console.log("Nalezen zakazany znak");
+        break;
     }
 
+    totalScore += value;
 
+    if(data[i].charAt(0) == hodnota) {
+        totalScore += draw;
+    } 
+    else if((data[i].charAt(0) == "A" && hodnota == "B") || (data[i].charAt(0) == "B" && hodnota == "C") || (data[i].charAt(0) == "C" && hodnota == "A")) {
+        totalScore += win;
+    } else numberOfLoose++;
+
+    // PART2
+    if (hodnota == "A") {
+        if (data[i].charAt(0) == "A") {
+            sum += scissors;
+        } else if(data[i].charAt(0) == "B") {
+            sum += rock;
+        } else if(data[i].charAt(0) == "C") {
+            sum += paper;
+        }
+    } else if(hodnota == "B") {
+        sum += draw;
+        if (data[i].charAt(0) == "A") {
+            sum += rock;
+        } else if(data[i].charAt(0) == "B") {
+            sum += paper;
+        } else if(data[i].charAt(0) == "C") {
+            sum += scissors;
+        }
+    } else if(hodnota == "C") {
+        sum += win;
+        if (data[i].charAt(0) == "A") {
+            sum += paper;
+        } else if(data[i].charAt(0) == "B") {
+            sum += scissors;
+        } else if(data[i].charAt(0) == "C") {
+            sum += rock;
+        }
+    }
 }
-console.log(totalScore)
+console.log(numberOfLoose++)
+console.log("Part1:" + totalScore)
+console.log("Part2: " + sum)
