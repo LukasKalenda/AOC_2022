@@ -1,4 +1,4 @@
-const input = `QJRBMDMtRDCtJzBtJMfjNjhwvmNDvwjLVVgh
+let input = `QJRBMDMtRDCtJzBtJMfjNjhwvmNDvwjLVVgh
 TPSNNPZGTjgmSmvfjL
 bPlpZZbpsTlTsWprpGFCJtRtzMNdMMBBcWnJQB
 tppvbQBhpQQdrzMMcLwhMc
@@ -299,89 +299,31 @@ mFpDZjvmtPPGvFjmmGTzTcFRbHczHTbzQgRS
 fNdqhJsNrnnVNhwNVdrdsVczQCcwCMHSTCHgHCRzHgcM
 JlgnNhsqVqNqNpPlvZvDDDGlZZ`
 
-const data = input.split("\n");
 
-let halfNumber;
-let firstHalf = [];
-let secondHalf = [];
-let sameChar;
-let intersection;
-let totalScore = 0;
-let porovnani;
+let backpacks = input.split("\n");
+let bckpCmp1
+let bckpCmp2
+let duplicates = []
+let finalDuplicates = []
+backpacks.forEach(backpack => {
+    bckpCmp1 = backpack.slice(0, backpack.length / 2).split("")
+    bckpCmp2 = backpack.slice(backpack.length / 2).split("")
 
-let firstRow = [];
-let secondRow = [];
-let thirdRow = [];
-let sum = 0;
-
-const smallAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-const highAlphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-
-for (let i = 0; i < data.length; i++) {
-    
-    halfNumber = data[i].length / 2;
-
-    for (let j = 0; j < halfNumber; j++) {
-        firstHalf.push(data[i][j])
-    }
-    for (let j = halfNumber; j < data[i].length; j++) {
-        secondHalf.push(data[i][j])
-    }
-
-    intersection = firstHalf.filter(element => secondHalf.includes(element));
-    sameChar = intersection.toString();
-    sameChar = sameChar.charAt(0);
-
-    porovnani = sameChar.toLowerCase();
-
-    if (sameChar == porovnani) {
-        for (let i = 0; i < smallAlphabet.length; i++) {
-            if (smallAlphabet[i] == sameChar) {
-                totalScore += i + 1;
-                break;
-            }  
-        }
-    } else {
-        for (let i = 0; i < highAlphabet.length; i++) {
-            if (highAlphabet[i] == sameChar) {
-                totalScore += i + 27;
-                break;
-            }  
+    for (let i = 0; i < bckpCmp1.length; i++) {
+        if (bckpCmp2.includes(bckpCmp1[i]) && !duplicates.includes(bckpCmp1[i])) {
+            duplicates.push(bckpCmp1[i])
         }
     }
-    console.log("Prubezne skore: " + totalScore)
-
-    firstHalf = [];
-    secondHalf = [];
-
+    finalDuplicates.push(duplicates)
+    duplicates = []
+});
+const alphabeth= "0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+for (let k = 0; k < finalDuplicates.length; k++) {
+    finalDuplicates[k] = alphabeth.indexOf(finalDuplicates[k])
 }
+let finalNumber =0
+finalDuplicates.forEach(element => {
+    finalNumber += element
+});
 
-console.log("Part1: " + totalScore)
-totalScore = 0;
-
-for (let i = 0; i < data.length; i+=3) {
-    intersection = data[i].filter(element => data[i + 1].includes(element) && data[i + 2].includes(element));
-    console.log("Shoda: " + intersection)
-
-    sameChar = intersection.toString();
-    sameChar = sameChar.charAt(0);
-
-    porovnani = sameChar.toLowerCase();
-
-    if (sameChar == porovnani) {
-        for (let i = 0; i < smallAlphabet.length; i++) {
-            if (smallAlphabet[i] == sameChar) {
-                totalScore += i + 1;
-                break;
-            }  
-        }
-    } else {
-        for (let i = 0; i < highAlphabet.length; i++) {
-            if (highAlphabet[i] == sameChar) {
-                totalScore += i + 27;
-                break;
-            }  
-        }
-    }
-    console.log("Prubezne skore: " + totalScore)
-}
+console.log(finalNumber)
