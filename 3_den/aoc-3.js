@@ -317,71 +317,120 @@ let sum = 0;
 const smallAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 const highAlphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 
-for (let i = 0; i < data.length; i++) {
+// Part 1
+
+// for (let i = 0; i < data.length; i++) {
     
-    halfNumber = data[i].length / 2;
+//     halfNumber = data[i].length / 2;
 
-    for (let j = 0; j < halfNumber; j++) {
-        firstHalf.push(data[i][j])
-    }
-    for (let j = halfNumber; j < data[i].length; j++) {
-        secondHalf.push(data[i][j])
-    }
+//     for (let j = 0; j < halfNumber; j++) {
+//         firstHalf.push(data[i][j])
+//     }
+//     for (let j = halfNumber; j < data[i].length; j++) {
+//         secondHalf.push(data[i][j])
+//     }
 
-    intersection = firstHalf.filter(element => secondHalf.includes(element));
-    sameChar = intersection.toString();
-    sameChar = sameChar.charAt(0);
+//     intersection = firstHalf.filter(element => secondHalf.includes(element));
+//     sameChar = intersection.toString();
+//     sameChar = sameChar.charAt(0);
 
-    porovnani = sameChar.toLowerCase();
+//     porovnani = sameChar.toLowerCase();
 
-    if (sameChar == porovnani) {
-        for (let i = 0; i < smallAlphabet.length; i++) {
-            if (smallAlphabet[i] == sameChar) {
-                totalScore += i + 1;
-                break;
-            }  
-        }
-    } else {
-        for (let i = 0; i < highAlphabet.length; i++) {
-            if (highAlphabet[i] == sameChar) {
-                totalScore += i + 27;
-                break;
-            }  
-        }
-    }
-    console.log("Prubezne skore: " + totalScore)
+//     if (sameChar == porovnani) {
+//         for (let i = 0; i < smallAlphabet.length; i++) {
+//             if (smallAlphabet[i] == sameChar) {
+//                 totalScore += i + 1;
+//                 break;
+//             }  
+//         }
+//     } else {
+//         for (let i = 0; i < highAlphabet.length; i++) {
+//             if (highAlphabet[i] == sameChar) {
+//                 totalScore += i + 27;
+//                 break;
+//             }  
+//         }
+//     }
+//     console.log("Prubezne skore: " + totalScore)
 
-    firstHalf = [];
-    secondHalf = [];
+//     firstHalf = [];
+//     secondHalf = [];
 
-}
+// }
 
-console.log("Part1: " + totalScore)
+// console.log("Part1: " + totalScore)
+
 totalScore = 0;
+let podminka = true;
 
-for (let i = 0; i < data.length; i+=3) {
-    intersection = data[i].filter(element => data[i + 1].includes(element) && data[i + 2].includes(element));
-    console.log("Shoda: " + intersection)
+for (let i = 0; i < data.length;) {
+
+    for (let j = 0; j < data[i].length; j++) {
+        firstRow.push(data[i][j])
+    }
+    i++;
+    for (let k = 0; k < data[i].length; k++) {
+        secondRow.push(data[i][k]);
+    }
+    i++;
+    for (let l = 0; l < data[i].length; l++) {
+        thirdRow.push(data[i][l]);
+    }
+    i++;
+    intersection = firstRow.filter(element => secondRow.includes(element) && thirdRow.includes(element));
 
     sameChar = intersection.toString();
     sameChar = sameChar.charAt(0);
 
     porovnani = sameChar.toLowerCase();
 
-    if (sameChar == porovnani) {
-        for (let i = 0; i < smallAlphabet.length; i++) {
-            if (smallAlphabet[i] == sameChar) {
-                totalScore += i + 1;
-                break;
-            }  
-        }
-    } else {
-        for (let i = 0; i < highAlphabet.length; i++) {
-            if (highAlphabet[i] == sameChar) {
-                totalScore += i + 27;
-                break;
-            }  
+    if (intersection != "") {
+        if (sameChar == porovnani) {
+            for (let i = 0; i < smallAlphabet.length; i++) {
+                if (smallAlphabet[i] == sameChar) {
+                    totalScore += i + 1;
+                    break;
+                }  
+            }
+        } else {
+            for (let i = 0; i < highAlphabet.length; i++) {
+                if (highAlphabet[i] == sameChar) {
+                    totalScore += i + 27;
+                    break;
+                }  
+            }
         }
     }
+    
     console.log("Prubezne skore: " + totalScore)
+
+    firstRow = [];
+    secondRow = [];
+    thirdRow = [];
 }
+
+const agesArray = [29, 48, 19, 16, 39, 35];
+const agesArray2 = [34, 48, 96, 19, 35, 21]
+
+const year = 2015;
+let ageOfPerson;
+
+let countAge = (ages) => {
+    for (let i = 0; i < ages.length; i++) {
+        birthDate = year - ages[i];
+        console.log("Rok narození osoby č." + (i + 1) + " je " + birthDate);
+        // console.log(`Rok narození osoby č.${i + 1} je ${ageOfPerson}`) toto je totožný zápis, v praxi se používá více
+        if (birthDate == 1980) {
+            console.log("Hurá, ty jsi stejně starý!")
+        } else if (birthDate < year - 18) {
+            console.log("Ty jsi ještě dítě, takže dál nepokračujeme!");
+            break;
+        } else console.log("Vy jste normální :)")
+    }
+}
+// zavoláme funkci a pošleme do ní pole
+let firsTry = countAge(agesArray)
+
+console.log("-------------------------")
+// totéž pro druhý pokus
+let secondTry = countAge(agesArray2)
