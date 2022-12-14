@@ -116,27 +116,68 @@ console.log(treeArray)
 console.log(treeArray.length)
 let actualNumber;
 
-let leftNumber;
-let rightNumber;
-let topNumber;
-let downNumber;
+let leftNumber = [];
+let rightNumber = [];
+let topNumber = [];
+let downNumber = [];
 
-let sum = 2 * (arrayLenght + treeArray.length) - 4;
+let maximum;
+let sum = 2 * (2 * arrayLenght) - 4;
 
 for (let i = 1; i < treeArray.length - 1; i++) {
     for (let j = 1; j < arrayLenght - 1; j++) {
+
         actualNumber = Number(treeArray[i][j]);
-        leftNumber = Number(treeArray[i][j - 1]);
-        rightNumber = Number(treeArray[i][j + 1]);
 
-        topNumber = Number(treeArray[i - 1][j]);
-        downNumber = Number(treeArray[i + 1][j])
-
-        if (actualNumber > leftNumber || actualNumber > rightNumber || actualNumber > topNumber || actualNumber > downNumber) {
-            sum++;
+        for (let k = 0; k < j; k++) {
+            leftNumber.push(Number(treeArray[i][k]));
         }
+        maximum = Math.max(...leftNumber)
+        if (actualNumber > maximum) {
+            sum++;
+            break;
+        }
+
+        for (let k = j + 1; k < arrayLenght - 1; k++) {
+            rightNumber.push(treeArray[i][k])
+        }
+        maximum = Math.max(...rightNumber)
+        if (actualNumber > maximum) {
+            sum++;
+            break;
+        }
+
+        for (let k = i; k <= 0; k--) {  
+            topNumber.push(treeArray[k][j])
+        }
+        maximum = Math.max(...topNumber)
+        if (actualNumber > maximum) {
+            sum++;
+            break;
+        }
+
+        for (let k = i; k < arrayLenght - 1; k++) {
+            downNumber.push(treeArray[k][j])
+        }
+        maximum = Math.max(...downNumber)
+        if (actualNumber > maximum) {
+            sum++;
+            break;
+        }
+
+        leftNumber = [];
+        rightNumber = [];
+        topNumber = [];
+        downNumber = [];
+        // rightNumber = Number(treeArray[i][j + 1]);
+
+        // topNumber = Number(treeArray[i - 1][j]);
+        // downNumber = Number(treeArray[i + 1][j])
+
+        // if (actualNumber > leftNumber || actualNumber > rightNumber || actualNumber > topNumber || actualNumber > downNumber) {
+        //     sum++;
+        // }
     }
-    console.log(treeArray[i])
 }
 
 console.log(sum)
